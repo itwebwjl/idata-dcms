@@ -1,0 +1,31 @@
+html,
+body,
+#app .home-index {
+  height: 100%;
+}
+
+// 申请应用弹窗
+.apply-use {
+  .apply-use-popup {
+    width: 700px;
+    .box {
+      .el-row {
+        margin: 20px 0 0 0;
+        .el-col {
+          height: 32px;
+          line-height: 32px;
+        }
+
+        .el-input__inner {
+          height: 32px;
+          line-height: 32px;
+        }
+      }
+
+      .label-icon {
+        color: #ff7635;
+        vertical-align: top;
+      }
+    }
+  }
+}

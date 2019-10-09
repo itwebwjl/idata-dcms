@@ -1,0 +1,29 @@
+html,
+body,
+#app .home-index {
+  height: 100%;
+}
+
+.apply-use .apply-use-popup {
+  width: 700px;
+}
+
+.apply-use .apply-use-popup .box .el-row {
+  margin: 20px 0 0 0;
+}
+
+.apply-use .apply-use-popup .box .el-row .el-col {
+  height: 32px;
+  line-height: 32px;
+}
+
+.apply-use .apply-use-popup .box .el-row .el-input__inner {
+  height: 32px;
+  line-height: 32px;
+}
+
+.apply-use .apply-use-popup .box .label-icon {
+  color: #ff7635;
+  vertical-align: top;
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,71 @@
+/* 自定义全局重置element-ui样式 */
+.el-menu--horizontal>.el-menu-item {
+  height: 80px;
+  line-height: 80px;
+}
+.el-menu.el-menu--horizontal {
+  border-bottom: 0px;
+}
+.el-select {
+  width: 100%;
+}
+.el-dialog__header {
+  border-radius: 4px 4px 0 0 !important;
+}
+.el-dialog {
+  border-radius: 4px  !important;
+}
+/* 分页器样式 */
+.el-pagination-wrap .el-pagination {
+  padding: 13px 0 13px 16px;
+  background: #fff;
+}
+.el-pagination-wrap button{
+  float: right;
+}
+.el-pagination-wrap .el-pager {
+  float: right;
+} 
+.el-pagination-wrap .btn-prev {
+  padding: 0 12px  !important;
+}
+.el-pagination-wrap .btn-next {
+  padding: 0 12px  !important;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #ff7635;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: #fff;
+  background-color: #ff7635;
+}
+/* 面包削样式 */
+.el-breadcrumb-wrap {
+  height: 32px;
+  padding-left: 32px;
+  background-color: #fafafa;
+  border-radius: 4px 4px 0px 0px;
+}
+.el-breadcrumb-wrap .el-breadcrumb {
+ line-height: 32px;
+}
+.el-dialog__header {
+  background-color: #f8f8f8;
+}
+.el-dialog__footer {
+  text-align: center;
+}
+.el-submenu__title {
+  color: #999999;
+}
+.el-menu-item {
+  font-size: 16px;
+  color: #999999;
+}
+.el-menu--horizontal>.el-menu-item.is-active {
+  border-bottom: 3px solid #ff7635;
+}
+.el-menu--horizontal>.el-menu-item {
+  margin-right: 20px;
+}
