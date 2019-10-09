@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-row>
-      <div class="title0">平安服务中台</div>
+      <div class="title0">平安服务中台123</div>
       <el-col :span='24'>
         <div class="content">
           <el-form label-position="left"
