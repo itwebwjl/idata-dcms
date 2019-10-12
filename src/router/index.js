@@ -81,6 +81,30 @@ export default new Router({
               name:"userManage",
             },
             {
+              path: "/serve/appManage",
+              component: resolve => require(['../page/serve/systemManage/appManage.vue'], resolve),
+              meta: {
+                title: '应用管理'
+              },
+              name:"userManage",
+            },
+            {
+              path: "/serve/handleRecord",
+              component: resolve => require(['../page/serve/systemManage/handleRecord.vue'], resolve),
+              meta: {
+                title: '操作日志'
+              },
+              name:"userManage",
+            },
+            {
+              path: "/serve/appManage",
+              component: resolve => require(['../page/serve/systemManage/appManage.vue'], resolve),
+              meta: {
+                title: '操作日志'
+              },
+              name:"userManage",
+            },
+            {
               path: "/serve/applyApprove",
               component: resolve => require(['../page/serve/dataServe/applyApprove.vue'], resolve),
               meta: {

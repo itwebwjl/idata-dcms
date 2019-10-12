@@ -4,7 +4,9 @@
       <div class="one">
         <el-row type="flex" align="bottom">
           <el-col :span="22">
-            <el-input placeholder="请输入关键词搜索" suffix-icon="el-icon-search"></el-input>
+             <el-input placeholder="请输入关键词搜索">
+                   <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+            </el-input>
           </el-col>
           <el-col :span="2" align="right">
             <el-button type="primary" @click="addUserFn">新增角色</el-button>
@@ -101,6 +103,9 @@
       };
     },
     methods:{
+      searchFn(){
+        console.log(123)
+      },
       addUserFn(){
         this.$router.push('/serve/addRole')
       },

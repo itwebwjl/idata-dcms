@@ -3,7 +3,9 @@
       <div class="top">
         <el-row type="flex" justify="space-between" align="middle">
           <el-col :span="20">
-            <el-input placeholder="请输入内容" suffix-icon="el-icon-search" v-model="inputVal"></el-input>
+            <el-input placeholder="请输入内容" v-model="inputVal">
+               <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+            </el-input>
           </el-col>
           <el-col :span="2">
             <el-dropdown @command="handleCommand">
@@ -13,8 +15,9 @@
               </el-button>
               <el-dropdown-menu slot="dropdown" >
                 <el-dropdown-item command="a">数据服务</el-dropdown-item>
-                <el-dropdown-item command="b">聚合服务</el-dropdown-item>
-                <el-dropdown-item command="c">推荐服务</el-dropdown-item>
+                <el-dropdown-item command="b">代理服务</el-dropdown-item>
+                 <el-dropdown-item command="c">聚合服务</el-dropdown-item>
+                <el-dropdown-item command="e">推荐服务</el-dropdown-item>
                 <el-dropdown-item command="d">H5 服务</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -124,12 +127,14 @@
             address: "上海市普陀区金沙江路 1516 弄"
           }
         ],
-
         inputVal: ""
       };
     },
     created() {},
     methods: {
+      searchFn(){
+        console.log(123)
+      },
       handleCommand(command) {
         console.log(command)
         if(command == 'a') {

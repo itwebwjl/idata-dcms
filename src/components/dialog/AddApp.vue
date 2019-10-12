@@ -1,38 +1,30 @@
 <template>
-  <div class="approve">
-    <el-dialog
-      title="审批结论"
-      :visible.sync="show"
-      :before-close="close"
-      custom-class="apply-use-popup"
-      width	="40%"
-    >
+  <div class="add-app">
+    <el-dialog title="新增用户" :visible.sync="centerDialogVisible" width="40%">
       <el-row type="flex" justify="center">
         <el-col :span="16">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100px"
+            label-width="120px"
             class="demo-ruleForm"
           >
-            <el-form-item label="请选择应用:" prop="region">
-              <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                <el-option label="审批通过" value="shanghai"></el-option>
-                <el-option label="审批不通过" value="beijing"></el-option>
+            <el-form-item label="应用ID:" placeholder="请输入应用ID" prop="name">
+              <el-input v-model="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="应用名称:" placeholder="请输入应用名称" prop="region">
+              <el-input v-model="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="所属专业公司:" prop="name">
+              <el-select v-model="ruleForm.region" placeholder="请输入所属专业公司">
+                <el-option label="平安银行" value="shanghai"></el-option>
+                <el-option label="中信银行" value="beijing"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="审批意见:" prop="region">
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4, maxRows:6}"
-                placeholder="请输入审批意见"
-                v-model="ruleForm.region"
-              ></el-input>
-            </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
-              <el-button @click="resetForm('ruleForm')">取消</el-button>
+              <el-button @click="submitForm('ruleForm')">取消</el-button>
+              <el-button   type="primary" @click="submitForm('ruleForm')">确定</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -45,9 +37,7 @@
   export default {
     data() {
       return {
-        show: false,
-        click_type: 1,
-        textarea: "",
+        centerDialogVisible: false,
         ruleForm: {
           name: "",
           region: "shanghai",
@@ -96,17 +86,26 @@
         }
       };
     },
-    methods: {
-      open() {
-        this.show = true;
+    methods:{
+      open(){
+        this.centerDialogVisible = true;
       },
-      close() {
-        this.show = false;
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
-      confirm() {}
     }
   };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.add-app {
+
+}
 </style>

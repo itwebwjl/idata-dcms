@@ -73,6 +73,8 @@
         currentPage: 1
       };
     },
+    created(){
+    },
     components: {
       ApplyUse
     },

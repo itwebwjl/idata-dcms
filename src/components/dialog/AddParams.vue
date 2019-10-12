@@ -57,7 +57,7 @@
   export default {
     data() {
       return {
-        centerDialogVisible: true,
+        centerDialogVisible: false,
         ruleForm: {
           name: "",
           name1: "",

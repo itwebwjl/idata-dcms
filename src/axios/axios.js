@@ -1,6 +1,5 @@
 import axios from 'axios';
-import Vue from 'vue';
-
+axios.defaults.withCredentials = true; 
 axios.interceptors.request.use(
   config => {
     if (sessionStorage.hasOwnProperty('token')) {

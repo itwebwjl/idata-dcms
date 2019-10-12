@@ -10,10 +10,19 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      // '/': {//设置本地跨域请求
+      //     target:'http://172.20.10.2',
+      //     secure: false, // 接受 运行在 https 上的服务
+      //     changeOrigin: true,
+      //     pathRewrite: {
+      //         '/': '/'
+      //     }
+      // }
+  },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '172.20.10.5', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

@@ -5,7 +5,7 @@
         class="sidebar-el-menu"
         background-color="#fff"
         text-color="#99999"
-        :default-active="onRoutes"
+        :default-active="$route.path"
         @open="handleOpen"
         @close="handleClose"
         router
@@ -82,7 +82,7 @@
           {
             icon: "el-icon-monitor",
             index: "/serve/controlRecord",
-            title: "监控日志",
+            title: "监控日志"
           },
           {
             icon: "el-icon-monitor",
@@ -96,6 +96,14 @@
               {
                 index: "/serve/roleManage",
                 title: "角色管理"
+              },
+              {
+                index: "/serve/appManage",
+                title: "应用管理"
+              },
+              {
+                index: "/serve/handleRecord",
+                title: "操作日志"
               }
             ]
           }
@@ -104,20 +112,25 @@
     },
     watch: {},
     computed: {
-      onRoutes() {
-        return this.$route.path;
-      },
       routerInfo() {
         const matched = this.$route.matched;
+        console.log(matched);
         const newArr = matched.map(v => {
-          if (v.path == "") {
-            v.path = "/";
+          console.log(v.path);
+          if (v.path == "" || v.path == "/") {
+            return {
+              src:'no',
+              title:'首页'
+            }
+          } else {
+            return {
+              src: v.path,
+              title: v.meta.title
+            };
           }
-          return {
-            src: v.path,
-            title: v.meta.title
-          };
         });
+        newArr.shift()
+        // console.log(newArr)  
         return newArr;
       }
     },
@@ -157,7 +170,6 @@
       bottom: 0;
       // overflow-y: scroll;
       background-color: #ffffff;
-
     }
   }
 </style>

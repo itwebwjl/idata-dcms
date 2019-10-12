@@ -1,70 +1,71 @@
 <template>
-  <div class="apply-approve">
+  <div class="handle-record">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
-          <el-col :span="24">
+          <el-col :span="6">
+            <el-date-picker
+              v-model="choseData"
+              type="daterange"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :default-time="['00:00:00', '23:59:59']"
+            ></el-date-picker>
+          </el-col>
+          <el-col :span="18" align="right">
             <el-input placeholder="请输入关键词搜索">
-                   <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+              <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
             </el-input>
           </el-col>
         </el-row>
-      </div>
-      <div class="list">
-        <div class="item">
-          <span class="label-type">服务类型：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">接口服务</a>
-          <a href="javascript:;" class="item-type">推荐服务</a>
-          <a href="javascript:;" class="item-type">H5 服务</a>
-          <a href="javascript:;" class="item-type">聚合服务</a>
-        </div>
-        <div class="item">
-          <span class="label-type">审批状态：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">待审批</a>
-          <a href="javascript:;" class="item-type">审批通过</a>
-          <a href="javascript:;" class="item-type">审批拒绝</a>
-        </div>
       </div>
     </div>
     <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="服务器名称">
+        <el-table-column label="日志编号">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="服务类型">
+        <el-table-column label="用户名称">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="费用">
+        <el-table-column label="操作菜单">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="业务负责人">
+        <el-table-column label="操作内容">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="服务状态">
+        <el-table-column label="操作时间">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="审批状态">
+        <el-table-column label="总耗时">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <!-- <el-table-column label="IP地址">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleCheck(scope.row)">审批</el-button>
-            <el-button type="text" @click="handleCheck(scope.row)">查看详情</el-button>
+            <span>{{ scope.row.date }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="MAC地址">
+          <template slot-scope="scope">
+            <span>{{ scope.row.date }}</span>
+          </template>
+        </el-table-column> -->
+        <el-table-column label="操作状态">
+          <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -84,16 +85,15 @@
         ></el-pagination>
       </div>
     </div>
-    <Approve ref="Approve"></Approve>
   </div>
 </template>
 
 <script>
-  import Approve from "../../../components/dialog/Approve.vue";
   export default {
     data() {
       return {
         currentPage: 2,
+        choseData: "",
         tableData: [
           {
             date: "2016-05-02",
@@ -118,25 +118,21 @@
         ]
       };
     },
-    components: {
-      Approve
-    },
     methods: {
       searchFn(){
         console.log(123)
       },
-      addUserFn() {},
+      addUserFn() {
+        this.$router.push("/serve/addRole");
+      },
       handleSizeChange() {},
-      handleCurrentChange() {},
-      handleCheck() {
-        this.$refs.Approve.open();
-      }
+      handleCurrentChange() {}
     }
   };
 </script>
 
 <style lang="scss" scoped>
-  .apply-approve {
+  .handle-record {
     height: 100%;
     .top {
       padding: 20px 32px;

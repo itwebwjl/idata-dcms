@@ -1,31 +1,44 @@
 <template>
   <div class="home">
     <div class="header clearfix">
-      <div class="one floLeft">平安银行数据服务中台</div>
-      <div class="two floLeft">
-        <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo"
-          mode="horizontal"
-          @select="handleSelect"
-          active-text-color="#ff7635"
-          text-color="#333"
-        >
-          <el-menu-item index="0">
-            <span>icon</span> 首页
-          </el-menu-item>
-          <el-menu-item index="1">我的服务</el-menu-item>
-          <el-menu-item index="2">服务管理</el-menu-item>
-        </el-menu>
-      </div>
-      <div class="three floLeft">
-        <el-input placeholder="请输入关键词搜索" suffix-icon="el-icon-search"></el-input>
-      </div>
-      <div class="four floRight">
-        <img class="logo" src="../assets/imgs/logo.png" alt>
-        <span class="welcome">欢迎你，管理员</span>
-        <span class="out">退出</span>
-      </div>
+      <el-row type="flex" align="middle">
+        <el-col :span="3">
+          <div class="one">平安银行数据服务中台</div>
+        </el-col>
+        <el-col :span="9">
+          <div class="two">
+            <el-menu
+              :default-active="activeIndex"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect"
+              active-text-color="#ff7635"
+              text-color="#333"
+            >
+              <el-menu-item index="0">
+                <span>icon</span> 首页
+              </el-menu-item>
+              <el-menu-item index="1">我的服务</el-menu-item>
+              <el-menu-item index="2">服务管理</el-menu-item>
+            </el-menu>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="three">
+            <el-input placeholder="请输入关键词搜索">
+              <!-- <slot slot="suffix" class="el-icon-search"></slot> -->
+              <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+            </el-input>
+          </div>
+        </el-col>
+        <el-col :span="6" align="right">
+          <div class="four">
+            <img class="logo" src="../assets/imgs/logo.png" alt>
+            <span class="welcome">欢迎你，管理员</span>
+            <a href="javascript:;" class="loginout"></a>
+          </div>
+        </el-col>
+      </el-row>
     </div>
     <div class="content">
       <router-view></router-view>
@@ -37,21 +50,24 @@
   export default {
     data() {
       return {
-        activeIndex: sessionStorage.getItem("activeIndex")||'0'
+        activeIndex: sessionStorage.getItem("activeIndex") || "0"
       };
     },
     methods: {
       handleSelect(key, keyPath) {
         if (key == 0) {
-          sessionStorage.setItem("activeIndex",'0')
+          sessionStorage.setItem("activeIndex", "0");
           this.$router.push("/index");
         } else if (key == 1) {
-           sessionStorage.setItem("activeIndex",'1')
+          sessionStorage.setItem("activeIndex", "1");
           this.$router.push("/myServe");
         } else if (key == 2) {
-           sessionStorage.setItem("activeIndex",'2')
+          sessionStorage.setItem("activeIndex", "2");
           this.$router.push("/serve");
         }
+      },
+      searchFn() {
+        console.log(123);
       }
     }
   };
@@ -81,13 +97,11 @@
         }
       }
       .three {
-        margin-left: 400px;
-        line-height: 80px;
-        width: 420px;
+        // line-height: 80px;
       }
       .four {
-        padding-right: 24px;
-        line-height: 80px;
+        // line-height: 80px;
+        padding-right: 30px;
         .logo {
           display: inline-block;
           width: 24px;
@@ -98,8 +112,15 @@
         .welcome {
           display: inline-block;
           color: #666666;
+          margin: 0 40px 0 10px;
+          // line-height: 80px;
         }
-        .out {
+        .loginout {
+          display: inline-block;
+          background: url("../assets/imgs/exit.png") no-repeat center/100%;
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
         }
       }
     }
@@ -109,7 +130,7 @@
       border-radius: 4px;
       // height: 99.5%;
       height: 100%;
-      overflow-y:scroll;
+      overflow-y: scroll;
     }
   }
 </style>

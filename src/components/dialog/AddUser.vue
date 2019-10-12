@@ -10,7 +10,7 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="用户名:" prop="name">
+            <!-- <el-form-item label="用户名:" prop="name">
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item label="专业公司:" prop="region">
@@ -27,14 +27,11 @@
             </el-form-item>
             <el-form-item label="姓名:" prop="name" placeholder="请输入姓名">
               <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="UM号:" prop="name">
-              <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                <el-option label="审批通过" value="shanghai"></el-option>
-                <el-option label="审批不通过" value="beijing"></el-option>
-              </el-select>
+              <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
-            <el-form-item label="密码:" prop="name">
+            <!-- <el-form-item label="密码:" prop="name">
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item label="确认密码:" prop="name">
@@ -45,7 +42,7 @@
                 <el-option label="管理员" value="shanghai"></el-option>
                 <el-option label="超级管理员" value="beijing"></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">取消</el-button>
               <el-button  @click="submitForm('ruleForm')">确定</el-button>
@@ -61,7 +58,7 @@
   export default {
     data() {
       return {
-        centerDialogVisible: true,
+        centerDialogVisible: false,
         ruleForm: {
           name: "",
           region: "shanghai",

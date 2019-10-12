@@ -1,70 +1,51 @@
 <template>
-  <div class="apply-approve">
+  <div class="app-manage">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
-          <el-col :span="24">
-            <el-input placeholder="请输入关键词搜索">
+          <el-col :span="22">
+              <el-input placeholder="请输入关键词搜索">
                    <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
             </el-input>
+          </el-col>
+          <el-col :span="2" align="right">
+            <el-button type="primary" @click="addAppFn">新增应用</el-button>
           </el-col>
         </el-row>
       </div>
       <div class="list">
         <div class="item">
-          <span class="label-type">服务类型：</span>
+          <span class="label-type">专业公司：</span>
           <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">接口服务</a>
-          <a href="javascript:;" class="item-type">推荐服务</a>
-          <a href="javascript:;" class="item-type">H5 服务</a>
-          <a href="javascript:;" class="item-type">聚合服务</a>
-        </div>
-        <div class="item">
-          <span class="label-type">审批状态：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">待审批</a>
-          <a href="javascript:;" class="item-type">审批通过</a>
-          <a href="javascript:;" class="item-type">审批拒绝</a>
+          <a href="javascript:;" class="item-type">平安银行</a>
+          <a href="javascript:;" class="item-type">平安租赁</a>
+          <a href="javascript:;" class="item-type">平安产检</a>
+          <a href="javascript:;" class="item-type">平安养老险</a>
         </div>
       </div>
     </div>
     <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="服务器名称">
+        <el-table-column label="应用ID">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="服务类型">
+        <el-table-column label="应用名称">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="费用">
+        <el-table-column label="所属专业公司">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="业务负责人">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="服务状态">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="审批状态">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleCheck(scope.row)">审批</el-button>
-            <el-button type="text" @click="handleCheck(scope.row)">查看详情</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">修改</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -84,12 +65,13 @@
         ></el-pagination>
       </div>
     </div>
-    <Approve ref="Approve"></Approve>
+
+    <AddApp ref="AddApp"></AddApp>
   </div>
 </template>
 
 <script>
-  import Approve from "../../../components/dialog/Approve.vue";
+import AddApp from "../../../components/dialog/AddApp.vue";
   export default {
     data() {
       return {
@@ -118,25 +100,29 @@
         ]
       };
     },
-    components: {
-      Approve
+    components:{
+      AddApp,
     },
-    methods: {
+    methods:{
       searchFn(){
-        console.log(123)
+        console.log('123')
       },
-      addUserFn() {},
-      handleSizeChange() {},
-      handleCurrentChange() {},
-      handleCheck() {
-        this.$refs.Approve.open();
+      addAppFn(){
+        // console.log(this.$ref)
+        this.$refs.AddApp.open()
+      },
+      handleSizeChange(){
+
+      },
+      handleCurrentChange(){
+
       }
     }
   };
 </script>
 
 <style lang="scss" scoped>
-  .apply-approve {
+  .app-manage {
     height: 100%;
     .top {
       padding: 20px 32px;

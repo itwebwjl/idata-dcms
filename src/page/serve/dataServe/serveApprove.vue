@@ -4,7 +4,9 @@
       <div class="one">
         <el-row type="flex" align="bottom">
           <el-col :span="24">
-            <el-input placeholder="请输入关键词搜索" suffix-icon="el-icon-search"></el-input>
+            <el-input placeholder="请输入关键词搜索">
+                <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+            </el-input>
           </el-col>
         </el-row>
       </div>
@@ -44,38 +46,38 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="服务器名称">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="服务类型">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="费用">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="业务负责人">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="服务状态">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="审批状态">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDelete(scope.row)">查看</el-button>
-            <el-button type="text" @click="handleDelete(scope.row)">查看审批意见</el-button>
+            <el-button type="text" @click="handleCheck(scope.row)">查看详情</el-button>
+            <el-button type="text" @click="handleCheck(scope.row)">审批</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,7 +133,13 @@
     components:{
     },
     methods:{
+      searchFn(){
+        console.log('123')
+      },
       addUserFn(){
+      },
+      handleCheck(){
+
       },
       handleSizeChange(){
 
