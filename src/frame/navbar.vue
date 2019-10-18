@@ -37,19 +37,19 @@
   export default {
     data() {
       return {
-        activeIndex: sessionStorage.getItem("activeIndex")||'0'
+        activeIndex: sessionStorage.getItem("activeIndex") || '0'
       };
     },
     methods: {
       handleSelect(key, keyPath) {
         if (key == 0) {
-          sessionStorage.setItem("activeIndex",'0')
+          sessionStorage.setItem("activeIndex", '0')
           this.$router.push("/index");
         } else if (key == 1) {
-           sessionStorage.setItem("activeIndex",'1')
-          this.$router.push("/myServe");
+          sessionStorage.setItem("activeIndex", '1')
+          this.$router.push("/service/my/index");
         } else if (key == 2) {
-           sessionStorage.setItem("activeIndex",'2')
+          sessionStorage.setItem("activeIndex", '2')
           this.$router.push("/serve");
         }
       }
@@ -60,6 +60,7 @@
 <style scoped lang="scss">
   .home {
     height: 100%;
+
     .header {
       position: fixed;
       top: 0;
@@ -68,26 +69,32 @@
       background-color: #fff;
       z-index: 999;
       box-shadow: 0px 2px 10px 0px rgba(157, 157, 157, 0.2);
+
       .one {
         line-height: 80px;
       }
+
       .two {
         padding-left: 150px;
         height: 80px;
+
         ul {
           li {
             height: 80px;
           }
         }
       }
+
       .three {
         margin-left: 400px;
         line-height: 80px;
         width: 420px;
       }
+
       .four {
         padding-right: 24px;
         line-height: 80px;
+
         .logo {
           display: inline-block;
           width: 24px;
@@ -95,21 +102,24 @@
           border-radius: 50%;
           vertical-align: middle;
         }
+
         .welcome {
           display: inline-block;
           color: #666666;
         }
+
         .out {
         }
       }
     }
+
     .content {
       background: #ececec;
       padding: 96px 16px 16px 16px;
       border-radius: 4px;
       // height: 99.5%;
       height: 100%;
-      overflow-y:scroll;
+      overflow-y: scroll;
     }
   }
 </style>
