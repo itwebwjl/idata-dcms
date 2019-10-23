@@ -32,7 +32,7 @@
   export default {
     data() {
       return {
-        centerDialogVisible: false,
+        selectRole: false,
         ruleForm: {
           role: ""
         },
@@ -45,7 +45,7 @@
     },
     methods: {
       open() {
-        this.centerDialogVisible = true;
+        this.selectRole = true;
       },
       submitForm(formName) {
         this.$refs[formName].validate(valid => {

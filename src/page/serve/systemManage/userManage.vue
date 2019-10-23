@@ -72,7 +72,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDelete(scope.row)">分配角色</el-button>
+            <el-button type="text" @click="handleFenPei(scope.row)">分配角色</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">启用</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">关闭</el-button>
@@ -97,31 +97,37 @@
     </div>
 
     <AddUser ref="AddUser" @action="addUserDoneFn"></AddUser>
+    <SelectRole ref="SelectRole" @action="selectRoleDoneFn"></SelectRole>
+    
   </div>
 </template>
 
 <script>
   import service from "../../../axios/index";
+  import SelectRole from "../../../components/dialog/SelectRole.vue";
   import AddUser from "../../../components/dialog/AddUser.vue";
   export default {
     data() {
       return {
         searchVal: "",
         currentPage: 2,
-        userList: []
+        userList: [],
+        selectRole: true
       };
     },
     components: {
-      AddUser: AddUser
+      AddUser,
+      SelectRole
     },
     created() {
       //获取用户列表
       this.getUserListFn();
     },
     methods: {
+      handleFenPei() {},
       getUserListFn() {
         service.user.userList().then(res => {
-            this.userList = res.data.content;
+          this.userList = res.data.content;
         });
       },
       searchFn() {
@@ -154,6 +160,9 @@
       addUserDoneFn() {
         this.getUserListFn();
       },
+      selectRoleDoneFn(){
+        
+      },
       handleSizeChange() {},
       handleCurrentChange() {},
       handleDelete(row) {
@@ -161,9 +170,7 @@
           .delUserByName({
             username: row.username
           })
-          .then(res => {
-            console.log(res);
-          });
+          .then(res => {});
       }
     }
   };
