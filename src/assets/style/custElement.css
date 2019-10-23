@@ -74,6 +74,7 @@
   font-size: 25px;
   position: relative;
   top: 3px;
+  cursor: pointer;
 }
 .el-input__suffix {
   line-height: 40px;

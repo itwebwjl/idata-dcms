@@ -35,7 +35,7 @@
           <div class="four">
             <img class="logo" src="../assets/imgs/logo.png" alt>
             <span class="welcome">欢迎你，管理员</span>
-            <a href="javascript:;" class="loginout"></a>
+            <a href="javascript:;" class="loginout" @click="loginOut"></a>
           </div>
         </el-col>
       </el-row>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import service from "../axios/index";
   export default {
     data() {
       return {
@@ -54,6 +55,17 @@
       };
     },
     methods: {
+      loginOut(){
+        let that = this
+        service.user.userLogout({}).then(res=>{
+          this.$message({
+            message:"退出成功",
+            type:"success"
+          },()=>{
+            that.$router.push('/login')
+          })
+        })
+      },
       handleSelect(key, keyPath) {
         if (key == 0) {
           sessionStorage.setItem("activeIndex", "0");

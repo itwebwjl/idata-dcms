@@ -3,13 +3,16 @@
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
-          <el-col :span="22">
-              <el-input placeholder="请输入关键词搜索">
-                   <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+          <el-col :span="20">
+            <el-input placeholder="请输入关键词搜索" v-model="searchVal" @keyup.enter.native="searchFn">
+              <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
             </el-input>
           </el-col>
-          <el-col :span="2" align="right">
+          <el-col :span="2" align="center">
             <el-button type="primary" @click="addUserFn">新增用户</el-button>
+          </el-col>
+          <el-col :span="2" align="center">
+            <el-button type="default" @click="addUserFn">批量导入用户</el-button>
           </el-col>
         </el-row>
       </div>
@@ -17,54 +20,62 @@
         <div class="item">
           <span class="label-type">专业公司：</span>
           <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">平安银行</a>
-          <a href="javascript:;" class="item-type">平安租赁</a>
+          <a href="javascript:;" class="item-type">有效</a>
+          <a href="javascript:;" class="item-type">无效</a>
         </div>
         <div class="item">
           <span class="label-type">角色：</span>
           <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">平安银行</a>
-          <a href="javascript:;" class="item-type">平安租赁</a>
+          <a href="javascript:;" class="item-type">管理员</a>
+          <a href="javascript:;" class="item-type">创建者</a>
+          <a href="javascript:;" class="item-type">申请者</a>
         </div>
       </div>
     </div>
     <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="服务器名称">
+      <el-table :data="userList" style="width: 100%">
+        <el-table-column label="UM号">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.username }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="服务类型">
+        <el-table-column label="角色">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.roleName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="费用">
+        <el-table-column label="姓名">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="业务负责人">
+        <el-table-column label="手机号">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.officePhone }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="服务状态">
+        <el-table-column label="部门">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.department }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="审批状态">
+        <el-table-column label="状态">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span>{{ scope.row.isEfftctive }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="最近操作时间">
+          <template slot-scope="scope">
+            <span>{{ scope.row.operateTime}}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDelete(scope.row)">查看</el-button>
-            <el-button type="text" @click="handleDelete(scope.row)">查看审批意见</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">分配角色</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">启用</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">关闭</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,56 +96,74 @@
       </div>
     </div>
 
-    <AddUser ref="AddUser"></AddUser>
+    <AddUser ref="AddUser" @action="addUserDoneFn"></AddUser>
   </div>
 </template>
 
 <script>
-import AddUser from "../../../components/dialog/AddUser.vue";
+  import service from "../../../axios/index";
+  import AddUser from "../../../components/dialog/AddUser.vue";
   export default {
     data() {
       return {
+        searchVal: "",
         currentPage: 2,
-        tableData: [
-          {
-            date: "2016-05-02",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1518 弄"
-          },
-          {
-            date: "2016-05-04",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1517 弄"
-          },
-          {
-            date: "2016-05-01",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1519 弄"
-          },
-          {
-            date: "2016-05-03",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1516 弄"
-          }
-        ]
+        userList: []
       };
     },
-    components:{
-      AddUser:AddUser,
+    components: {
+      AddUser: AddUser
     },
-    methods:{
-      searchFn(){
-        console.log('123')
+    created() {
+      //获取用户列表
+      this.getUserListFn();
+    },
+    methods: {
+      getUserListFn() {
+        service.user.userList().then(res => {
+            this.userList = res.data.content;
+        });
       },
-      addUserFn(){
+      searchFn() {
+        if (this.searchVal != "") {
+          service.user
+            .findOneByUsername({
+              username: this.searchVal
+            })
+            .then(res => {
+              if (res.code == 404) {
+                this.$message({
+                  message: "不存在该用户"
+                });
+              } else {
+                this.userList = [res.data];
+              }
+            });
+        } else {
+          this.$message({
+            message: "不能为空",
+            type: "warning"
+          });
+        }
+      },
+      addUserFn() {
         // console.log(this.$ref)
-        this.$refs.AddUser.open()
+        this.$refs.AddUser.open();
       },
-      handleSizeChange(){
-
+      // 增加um弹窗
+      addUserDoneFn() {
+        this.getUserListFn();
       },
-      handleCurrentChange(){
-
+      handleSizeChange() {},
+      handleCurrentChange() {},
+      handleDelete(row) {
+        service.user
+          .delUserByName({
+            username: row.username
+          })
+          .then(res => {
+            console.log(res);
+          });
       }
     }
   };

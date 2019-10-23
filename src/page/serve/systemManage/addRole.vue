@@ -31,48 +31,19 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="权限分配:" prop="name">
-            <!-- <el-row>
-              <el-col :span="4">
-                <el-checkbox
-                  :indeterminate="isIndeterminate"
-                  v-model="checkAll"
-                  @change="handleCheckAllChange"
-                  border
-                >首页</el-checkbox>
-              </el-col>
-              <el-col :span="20">
-                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                  <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                </el-checkbox-group>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="4">
-                <el-checkbox
-                  :indeterminate="isIndeterminate"
-                  v-model="checkAll"
-                  @change="handleCheckAllChange"
-                  border
-                >首页</el-checkbox>
-              </el-col>
-              <el-col :span="20">
-                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                  <el-checkbox v-for="city in myServe" :label="city" :key="city">{{city}}</el-checkbox>
-                </el-checkbox-group>
-              </el-col>
-            </el-row>-->
+  
 
             <el-collapse>
               <el-row>
                 <el-col :span="6">
                   <div>菜单名称</div>
                 </el-col>
-                <el-col :span="18">
+                <el-col :span="18" align="right">
                   <div>权限节点</div>
                 </el-col>
               </el-row>
 
-              <el-row>
+              <el-row v-for="(item,i) in 3" :key="i">
                 <el-col :span="24">
                   <el-collapse-item>
                     <template slot="title">
@@ -122,156 +93,7 @@
                 </el-col>
               </el-row>
 
-              <el-row>
-                <el-col :span="24">
-                  <el-collapse-item>
-                    <template slot="title">
-                      <el-checkbox
-                        :indeterminate="isIndeterminate"
-                        v-model="checkAll"
-                        @change="handleCheckAllChange"
-                      >控制面板</el-checkbox>
-                    </template>
-
-                    <el-row>
-                      <el-col :span="6" :push="1">
-                        <el-checkbox
-                          :indeterminate="isIndeterminate"
-                          v-model="checkAll"
-                          @change="handleCheckAllChange"
-                        >首页</el-checkbox>
-                      </el-col>
-                      <el-col :span="18">
-                        <el-checkbox-group
-                          v-model="checkedCities"
-                          @change="handleCheckedCitiesChange"
-                        >
-                          <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                        </el-checkbox-group>
-                      </el-col>
-                    </el-row>
-
-                    <el-row>
-                      <el-col :span="6" :push="1">
-                        <el-checkbox
-                          :indeterminate="isIndeterminate"
-                          v-model="checkAll"
-                          @change="handleCheckAllChange"
-                        >我的服务</el-checkbox>
-                      </el-col>
-                      <el-col :span="18">
-                        <el-checkbox-group
-                          v-model="checkedCities"
-                          @change="handleCheckedCitiesChange"
-                        >
-                          <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                        </el-checkbox-group>
-                      </el-col>
-                    </el-row>
-                  </el-collapse-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="24">
-                  <el-collapse-item>
-                    <template slot="title">
-                      <el-checkbox
-                        :indeterminate="isIndeterminate"
-                        v-model="checkAll"
-                        @change="handleCheckAllChange"
-                      >控制面板</el-checkbox>
-                    </template>
-
-                    <el-row>
-                      <el-col :span="6" :push="1">
-                        <el-checkbox
-                          :indeterminate="isIndeterminate"
-                          v-model="checkAll"
-                          @change="handleCheckAllChange"
-                        >首页</el-checkbox>
-                      </el-col>
-                      <el-col :span="18">
-                        <el-checkbox-group
-                          v-model="checkedCities"
-                          @change="handleCheckedCitiesChange"
-                        >
-                          <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                        </el-checkbox-group>
-                      </el-col>
-                    </el-row>
-
-                    <el-row>
-                      <el-col :span="6" :push="1">
-                        <el-checkbox
-                          :indeterminate="isIndeterminate"
-                          v-model="checkAll"
-                          @change="handleCheckAllChange"
-                        >我的服务</el-checkbox>
-                      </el-col>
-                      <el-col :span="18">
-                        <el-checkbox-group
-                          v-model="checkedCities"
-                          @change="handleCheckedCitiesChange"
-                        >
-                          <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                        </el-checkbox-group>
-                      </el-col>
-                    </el-row>
-                  </el-collapse-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="24">
-                  <el-collapse-item>
-                    <template slot="title">
-                      <el-checkbox
-                        :indeterminate="isIndeterminate"
-                        v-model="checkAll"
-                        @change="handleCheckAllChange"
-                      >控制面板</el-checkbox>
-                    </template>
-
-                    <el-row>
-                      <el-col :span="6" :push="1">
-                        <el-checkbox
-                          :indeterminate="isIndeterminate"
-                          v-model="checkAll"
-                          @change="handleCheckAllChange"
-                        >首页</el-checkbox>
-                      </el-col>
-                      <el-col :span="18">
-                        <el-checkbox-group
-                          v-model="checkedCities"
-                          @change="handleCheckedCitiesChange"
-                        >
-                          <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                        </el-checkbox-group>
-                      </el-col>
-                    </el-row>
-
-                    <el-row>
-                      <el-col :span="6" :push="1">
-                        <el-checkbox
-                          :indeterminate="isIndeterminate"
-                          v-model="checkAll"
-                          @change="handleCheckAllChange"
-                        >我的服务</el-checkbox>
-                      </el-col>
-                      <el-col :span="18">
-                        <el-checkbox-group
-                          v-model="checkedCities"
-                          @change="handleCheckedCitiesChange"
-                        >
-                          <el-checkbox v-for="city in index" :label="city" :key="city">{{city}}</el-checkbox>
-                        </el-checkbox-group>
-                      </el-col>
-                    </el-row>
-                  </el-collapse-item>
-                </el-col>
-              </el-row>
-
+              
             </el-collapse>
           </el-form-item>
           <el-form-item>
@@ -449,6 +271,7 @@
     },
     methods: {
       handleCheckAllChange(val) {
+
         this.checkedCities = val ? this.index : [];
         this.isIndeterminate = false; //true按钮为 - 选项
       },

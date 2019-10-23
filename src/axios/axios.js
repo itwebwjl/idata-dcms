@@ -1,35 +1,38 @@
 import axios from 'axios';
-axios.defaults.withCredentials = true; 
+import { Message } from 'element-ui';
+import qs from "qs";
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = process.env.API_ROOT;
+// axios.defaults.timeout = 6000;
+
 axios.interceptors.request.use(
   config => {
-    if (sessionStorage.hasOwnProperty('token')) {
-      config.headers.token = sessionStorage.getItem('token');
-      return config;
+    if (config.method.toUpperCase() == ('POST' || 'PUT')) {
+      config.data = qs.stringify(config.data)
     }
+    // console.log(config)
     return config;
   }
 );
 
 axios.interceptors.response.use(
   response => {
-    if (response.headers.hasOwnProperty('token')) {
-      window.sessionStorage.setItem('token', response.headers.token);
+    if (response.data.code == 0) {
+      return response.data
+    } else {
+      Message({
+        message: response.data.msg ||'接口异常',
+        type: "error"
+      })
+      return response.data;
     }
-    if (response.data.status !== 'success') {
-
-    }
-    return response;
   },
   err => {
-    if (err.response) {
-      if (err.response.data && err.response.data.msg) {
-      
-      } else {
-       
-      }
-    } else {
-    
-    }
+    Message({
+      message: '网络异常',
+      type: 'error',
+    })
+    console.dir(err)
     return err;
   }
 );

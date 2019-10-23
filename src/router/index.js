@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 Vue.use(Router)
 
 export default new Router({
@@ -78,7 +77,7 @@ export default new Router({
               meta: {
                 title: '新增角色'
               },
-              name:"userManage",
+              name:"addRole",
             },
             {
               path: "/serve/appManage",
@@ -86,7 +85,7 @@ export default new Router({
               meta: {
                 title: '应用管理'
               },
-              name:"userManage",
+              name:"appManage",
             },
             {
               path: "/serve/handleRecord",
@@ -94,7 +93,7 @@ export default new Router({
               meta: {
                 title: '操作日志'
               },
-              name:"userManage",
+              name:"handleRecord",
             },
             {
               path: "/serve/appManage",
@@ -102,7 +101,7 @@ export default new Router({
               meta: {
                 title: '操作日志'
               },
-              name:"userManage",
+              name:"appManage",
             },
             {
               path: "/serve/applyApprove",
@@ -110,7 +109,7 @@ export default new Router({
               meta: {
                 title: '申请审批'
               },
-              name:"userManage",
+              name:"applyApprove",
             },
             {
               path: "/serve/serveApprove",
@@ -118,7 +117,7 @@ export default new Router({
               meta: {
                 title: '服务审批'
               },
-              name:"userManage",
+              name:"serveApprove",
             },
             {
               path: "/serve/controlRecord",
@@ -126,7 +125,7 @@ export default new Router({
               meta: {
                 title: '监控日志'
               },
-              name:"userManage",
+              name:"controlRecord",
             },
           ]
         }
@@ -135,6 +134,13 @@ export default new Router({
     {
       path: '/login',
       component: resolve => require(['../page/login.vue'], resolve),
+      meta: {
+        title:"登录"
+      }
+    },
+    {
+      path: '/test',
+      component: resolve => require(['../page/test.vue'], resolve),
       meta: {
         title:"登录"
       }

@@ -6,7 +6,7 @@
       </el-breadcrumb>
     </div>
     <div class="two">
-      <a href="javascript:;" class="apply-newServe">+ 申请新服务</a>
+      <el-button type="primary">+ 申请新服务</el-button>
     </div>
     <div class="three">
       <el-table :data="tableData" style="width: 100%" class="three-tabble">
@@ -73,12 +73,12 @@
       ></el-pagination>
     </div>
 
-     <Approve ref="Approve"></Approve>
+    <Approve ref="Approve"></Approve>
   </div>
 </template>
 
 <script>
-import Approve from "../../components/dialog/Approve.vue";
+  import Approve from "../../components/dialog/Approve.vue";
   export default {
     data() {
       return {
@@ -107,7 +107,7 @@ import Approve from "../../components/dialog/Approve.vue";
         currentPage: 1
       };
     },
-    components:{
+    components: {
       Approve
     },
     methods: {
@@ -116,7 +116,7 @@ import Approve from "../../components/dialog/Approve.vue";
         this.$router.push("/serveDetail");
       },
       checkIdeaFn(index, row) {
-       this.$refs.Approve.open();
+        this.$refs.Approve.open();
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -137,17 +137,6 @@ import Approve from "../../components/dialog/Approve.vue";
       height: 80px;
       line-height: 80px;
       padding-left: 20px;
-      .apply-newServe {
-        text-indent: 8px;
-        display: inline-block;
-        width: 105px;
-        height: 28px;
-        border-radius: 4px;
-        border: solid 1px #ff7635;
-        color: #ff7635;
-        font-size: 14px;
-        line-height: 28px;
-      }
     }
     .three {
       .three-tabble {

@@ -114,9 +114,9 @@
     computed: {
       routerInfo() {
         const matched = this.$route.matched;
-        console.log(matched);
+        // console.log(matched);
         const newArr = matched.map(v => {
-          console.log(v.path);
+          // console.log(v.path);
           if (v.path == "" || v.path == "/") {
             return {
               src:'no',
@@ -151,8 +151,8 @@
     height: 100%;
     position: relative;
     .slider {
+      position: absolute;
       margin: 0 16px;
-      float: left;
       width: 201px;
       height: 100%;
       background: #fff;

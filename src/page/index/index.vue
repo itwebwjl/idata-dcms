@@ -74,6 +74,7 @@
       };
     },
     created(){
+      // console.log(this.$router.options,this.$route)
     },
     components: {
       ApplyUse
