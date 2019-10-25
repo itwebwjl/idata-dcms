@@ -104,8 +104,8 @@
 
 <script>
   import service from "../../../axios/index";
-  import SelectRole from "../../../components/dialog/SelectRole.vue";
-  import AddUser from "../../../components/dialog/AddUser.vue";
+  import SelectRole from "../../../components/system/SelectRole.vue";
+  import AddUser from "../../../components/system/AddUser.vue";
   export default {
     data() {
       return {

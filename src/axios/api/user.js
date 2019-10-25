@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from 'qs';
 
 export const securityLogoin = obj => axios.post('/api/security/login', obj)
 

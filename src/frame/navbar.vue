@@ -51,11 +51,7 @@ import service from "../axios/index";
   export default {
     data() {
       return {
-<<<<<<< HEAD:src/page/home.vue
-        activeIndex: sessionStorage.getItem("activeIndex") || "0"
-=======
         activeIndex: sessionStorage.getItem("activeIndex") || '0'
->>>>>>> 8a687d6db51a46e6ad22879f44f240967b168201:src/frame/navbar.vue
       };
     },
     methods: {
@@ -72,23 +68,13 @@ import service from "../axios/index";
       },
       handleSelect(key, keyPath) {
         if (key == 0) {
-<<<<<<< HEAD:src/page/home.vue
-          sessionStorage.setItem("activeIndex", "0");
-          this.$router.push("/index");
-        } else if (key == 1) {
-          sessionStorage.setItem("activeIndex", "1");
-          this.$router.push("/myServe");
-        } else if (key == 2) {
-          sessionStorage.setItem("activeIndex", "2");
-=======
           sessionStorage.setItem("activeIndex", '0')
           this.$router.push("/index");
         } else if (key == 1) {
           sessionStorage.setItem("activeIndex", '1')
-          this.$router.push("/service/my/index");
+          this.$router.push("/myServe");
         } else if (key == 2) {
           sessionStorage.setItem("activeIndex", '2')
->>>>>>> 8a687d6db51a46e6ad22879f44f240967b168201:src/frame/navbar.vue
           this.$router.push("/serve");
         }
       },
@@ -132,14 +118,9 @@ import service from "../axios/index";
       }
 
       .four {
-<<<<<<< HEAD:src/page/home.vue
-        // line-height: 80px;
-        padding-right: 30px;
-=======
         padding-right: 24px;
         line-height: 80px;
 
->>>>>>> 8a687d6db51a46e6ad22879f44f240967b168201:src/frame/navbar.vue
         .logo {
           display: inline-block;
           width: 24px;
@@ -154,17 +135,8 @@ import service from "../axios/index";
           margin: 0 40px 0 10px;
           // line-height: 80px;
         }
-<<<<<<< HEAD:src/page/home.vue
-        .loginout {
-          display: inline-block;
-          background: url("../assets/imgs/exit.png") no-repeat center/100%;
-          width: 20px;
-          height: 20px;
-          vertical-align: middle;
-=======
 
         .out {
->>>>>>> 8a687d6db51a46e6ad22879f44f240967b168201:src/frame/navbar.vue
         }
       }
     }

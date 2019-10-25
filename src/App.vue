@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style>
+
 @import './assets/style/normalize.css';
 @import './assets/style/main.css';
 @import './assets/style/common.css';

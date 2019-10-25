@@ -17,39 +17,20 @@
     <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="服务器名称">
+        <el-table-column label="角色名称">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="服务类型">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="费用">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="业务负责人">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="服务状态">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="审批状态">
+        <el-table-column label="角色描述">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.date }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDelete(scope.row)">修改</el-button>
+              <el-button type="text" @click="handleDelete(scope.row)">查看</el-button>
+            <el-button type="text" @click="handleDelete(scope.row)">编辑</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
