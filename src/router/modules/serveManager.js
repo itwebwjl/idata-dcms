@@ -11,7 +11,7 @@ let serveManager =
     path: "/serve/serveManage",
     component: resolve => require(['../../page/serve/dataServe/serveManage.vue'], resolve),
     meta: {
-      title: '服务管理'
+      title: ['数据服务','服务管理']
     },
     name: "serveManage"
   },
@@ -69,7 +69,7 @@ let serveManager =
     meta: {
       title: '应用管理'
     },
-    name: "controlRecord",
+    name: "appManage",
   },
   {
     path: "/serve/handleRecord",
@@ -77,7 +77,7 @@ let serveManager =
     meta: {
       title: '操作日志'
     },
-    name: "controlRecord",
+    name: "handleRecord",
   },
 
   {

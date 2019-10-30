@@ -17,18 +17,14 @@
         </el-row>
       </div>
       <div class="list">
-        <div class="item">
-          <span class="label-type">专业公司：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">有效</a>
-          <a href="javascript:;" class="item-type">无效</a>
-        </div>
-        <div class="item">
-          <span class="label-type">角色：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">管理员</a>
-          <a href="javascript:;" class="item-type">创建者</a>
-          <a href="javascript:;" class="item-type">申请者</a>
+        <div class="item" v-for="(item,index) in userManager" :key="index">
+          <a
+            @click="chooseType(item,subItem,index,subIndex)"
+            href="javasript:;"
+            :class="{'item-type':subIndex!=0,'label-type':subIndex == 0,'active':subItem.isCho}"
+            v-for="(subItem,subIndex) in item "
+            :key="subIndex"
+          >{{subItem.type}}</a>
         </div>
       </div>
     </div>
@@ -85,24 +81,22 @@
           background
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          layout="total, next,pager,prev"
+          :current-page="page.pageNumber"
+          layout="total,sizes,next,pager,prev,jumper"
           prev-text="上一页"
           next-text="下一页"
-          :total="400"
+          :total="totalElements"
         ></el-pagination>
       </div>
     </div>
 
     <AddUser ref="AddUser" @action="addUserDoneFn"></AddUser>
     <SelectRole ref="SelectRole" @action="selectRoleDoneFn"></SelectRole>
-    
   </div>
 </template>
 
 <script>
+  import { userManager } from "../../../constans/index";
   import service from "../../../axios/index";
   import SelectRole from "../../../components/system/SelectRole.vue";
   import AddUser from "../../../components/system/AddUser.vue";
@@ -110,9 +104,13 @@
     data() {
       return {
         searchVal: "",
-        currentPage: 2,
         userList: [],
-        selectRole: true
+        totalElements: 0,
+        page: {
+          pageNumber: 1,
+          pageSize: 10
+        },
+        userManager
       };
     },
     components: {
@@ -122,12 +120,31 @@
     created() {
       //获取用户列表
       this.getUserListFn();
+      this.getRoleAll();
     },
     methods: {
+      getRoleAll() {
+        service.role.findAllRole({}).then(res => {
+          console.log(res);
+        });
+      },
+      chooseType(item, subItem, index, subIndex) {
+        if (subIndex) {
+          item.forEach(e => {
+            e.isCho = false;
+          });
+          subItem.isCho = true;
+          this.serviceList[index] = item;
+          this.$set(this.serviceList, index, item);
+        }
+      },
       handleFenPei() {},
       getUserListFn() {
         service.user.userList().then(res => {
-          this.userList = res.data.content;
+          // console.log(res);
+          if (res) {
+            this.userList = res.data.content;
+          }
         });
       },
       searchFn() {
@@ -160,17 +177,30 @@
       addUserDoneFn() {
         this.getUserListFn();
       },
-      selectRoleDoneFn(){
-        
-      },
-      handleSizeChange() {},
-      handleCurrentChange() {},
-      handleDelete(row) {
+      selectRoleDoneFn() {},
+      handleDelete(val) {
         service.user
           .delUserByName({
-            username: row.username
+            username: val.username
           })
-          .then(res => {});
+          .then(res => {
+            if (res.code == 0) {
+              this.$message({
+                type: "success",
+                message: ""
+              });
+            }
+          });
+      },
+      handleSizeChange(val) {
+        this.page.pageNumber = 1;
+        this.page.pageSize = val;
+        this.getUserListFn();
+        // console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        this.page.pageNumber = val;
+        this.getUserListFn();
       }
     }
   };

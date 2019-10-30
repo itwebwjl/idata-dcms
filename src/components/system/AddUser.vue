@@ -14,7 +14,7 @@
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="reset('ruleForm')">取消</el-button>
+              <el-button type="primary" @click="resetForm('ruleForm')">取消</el-button>
               <el-button @click="submitForm('ruleForm')">确定</el-button>
             </el-form-item>
           </el-form>
@@ -55,7 +55,13 @@
               })
               .then(res => {
                 if (res.code == 0) {
-                  this.reset(formName)
+                  this.centerDialogVisible = false;
+                  this.$message({
+                    type: "success",
+                    message: "新增用成功"
+                  });
+
+                  this.reset(formName);
                   this.$emit("action");
                 }
                 // 异常处理直接提示
@@ -66,7 +72,7 @@
           }
         });
       },
-      reset(formName) {
+      resetForm(formName) {
         this.centerDialogVisible = false;
         this.$refs[formName].resetFields();
       }

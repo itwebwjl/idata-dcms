@@ -11,20 +11,14 @@
         </el-row>
       </div>
       <div class="list">
-        <div class="item">
-          <span class="label-type">服务类型：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">接口服务</a>
-          <a href="javascript:;" class="item-type">推荐服务</a>
-          <a href="javascript:;" class="item-type">H5 服务</a>
-          <a href="javascript:;" class="item-type">聚合服务</a>
-        </div>
-        <div class="item">
-          <span class="label-type">审批状态：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">待审批</a>
-          <a href="javascript:;" class="item-type">审批通过</a>
-          <a href="javascript:;" class="item-type">审批拒绝</a>
+               <div class="item" v-for="(item,index) in applyApprove" :key="index">
+          <a
+            @click="chooseType(item,subItem,index,subIndex)"
+            href="javasript:;"
+            :class="{'item-type':subIndex!=0,'label-type':subIndex == 0,'active':subItem.isCho}"
+            v-for="(subItem,subIndex) in item "
+            :key="subIndex"
+          >{{subItem.type}}</a>
         </div>
       </div>
     </div>
@@ -89,10 +83,12 @@
 </template>
 
 <script>
+import { applyApprove } from "../../../constans/index";
   import Approve from "../../../components/dialog/Approve.vue";
   export default {
     data() {
       return {
+        applyApprove,
         currentPage: 2,
         tableData: [
           {
@@ -122,6 +118,16 @@
       Approve
     },
     methods: {
+         chooseType(item, subItem, index, subIndex) {
+        if (subIndex) {
+          item.forEach(e => {
+            e.isCho = false;
+          });
+          subItem.isCho = true;
+          this.serviceList[index] = item;
+          this.$set(this.serviceList, index, item);
+        }
+      },
       searchFn(){
         console.log(123)
       },

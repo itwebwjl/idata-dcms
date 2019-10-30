@@ -24,7 +24,11 @@
     <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
       <el-table :data="logList" style="width: 100%">
-        <el-table-column label="日志编号" width="150" type="index"></el-table-column>
+        <el-table-column label="日志编号">
+          <template slot-scope="scope">
+            <span>{{ scope.row.id }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="用户名称">
           <template slot-scope="scope">
             <span>{{ scope.row.username }}</span>
@@ -99,7 +103,7 @@
           service.log
             .getLogsList({
               pageNumber: this.page.pageNumber,
-              pageSize: this.page.pag1eSize,
+              pageSize: this.page.pageSize,
               content: this.searchVal
             })
             .then(res => {

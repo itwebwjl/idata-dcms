@@ -30,7 +30,7 @@
   export default {
     data() {
       return {
-        selectRole: true,
+        selectRole: false,
         ruleForm: {
           role: ""
         },
