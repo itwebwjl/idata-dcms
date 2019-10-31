@@ -1,5 +1,5 @@
 <template>
-  <div class="serve-manage">
+  <div class="serve-manage"  style="display:flex;flex-direction:column">
     <div class="top">
       <el-row type="flex" justify="space-between" align="middle">
         <el-col :span="20">
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="服务器名称">
@@ -182,7 +182,8 @@
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

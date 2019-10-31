@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <div class="bottom-list clearfix">
         <div class="bottom-item" v-for="(item,index) in 4" :key="index">

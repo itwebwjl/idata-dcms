@@ -60,8 +60,7 @@
                     type: "success",
                     message: "新增用成功"
                   });
-
-                  this.reset(formName);
+                  this.resetForm(formName);
                   this.$emit("action");
                 }
                 // 异常处理直接提示

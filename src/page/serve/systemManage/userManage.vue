@@ -1,5 +1,5 @@
 <template>
-  <div class="user-manage">
+  <div class="user-manage"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
@@ -24,11 +24,11 @@
             :class="{'item-type':subIndex!=0,'label-type':subIndex == 0,'active':subItem.isCho}"
             v-for="(subItem,subIndex) in item "
             :key="subIndex"
-          >{{subItem.type}}</a>
+          >{{subItem.type||subItem.roleName}}</a>
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="userList" style="width: 100%">
         <el-table-column label="UM号">
@@ -70,8 +70,16 @@
           <template slot-scope="scope">
             <el-button type="text" @click="handleFenPei(scope.row)">分配角色</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
-            <el-button type="text" @click="handleDelete(scope.row)">启用</el-button>
-            <el-button type="text" @click="handleDelete(scope.row)">关闭</el-button>
+            <el-button
+              v-if="scope.row.isEfftctive == '无效'"
+              type="text"
+              @click="handleChange(scope.row)"
+            >启用</el-button>
+            <el-button
+              v-if="scope.row.isEfftctive == '有效'"
+              type="text"
+              @click="handleChange(scope.row)"
+            >关闭</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,15 +99,20 @@
     </div>
 
     <AddUser ref="AddUser" @action="addUserDoneFn"></AddUser>
-    <SelectRole ref="SelectRole" @action="selectRoleDoneFn"></SelectRole>
+    <SelectRole
+      ref="SelectRole"
+      :choseName="choseName"
+      :allRole="allRole"
+      @action="selectRoleDoneFn"
+    ></SelectRole>
   </div>
 </template>
 
 <script>
-  import { userManager } from "../../../constans/index";
+  // import { userManager } from "../../../constans/index";
   import service from "../../../axios/index";
-  import SelectRole from "../../../components/system/SelectRole.vue";
-  import AddUser from "../../../components/system/AddUser.vue";
+  import SelectRole from "../../../components/user/SelectRole.vue";
+  import AddUser from "../../../components/user/AddUser.vue";
   export default {
     data() {
       return {
@@ -110,7 +123,12 @@
           pageNumber: 1,
           pageSize: 10
         },
-        userManager
+        // userManager,
+        userManager: [],
+        choseName: "", //用于分配角色用户名字
+        allRole: [],
+        effectSymbol: "", // 01有效  02无效
+        roleId: "" //筛选的角色Id
       };
     },
     components: {
@@ -123,9 +141,68 @@
       this.getRoleAll();
     },
     methods: {
+      getUserListFn() {
+        service.user
+          .userList({
+            pageNumber: this.page.pageNumber,
+            pageSize: this.page.pageSize,
+            keyword: this.searchVal,
+            effectSymbol: this.effectSymbol,
+            roleId: this.roleId
+          })
+          .then(res => {
+            // console.log(res);
+            if (res.code == 0) {
+              this.userList = res.data.content;
+              if (this.searchVal && !res.data.content) {
+                this.$message({
+                  type: "success",
+                  message: "没有改用户"
+                });
+              }
+            }
+          });
+      },
+      handleChange(val) {
+        service.user
+          .changeSymbol({
+            username: val.username
+          })
+          .then(res => {
+            if (res.code == 0) {
+              this.$message({
+                type: "success",
+                message: "修改状态成功"
+              });
+              this.getUserListFn();
+            }
+          });
+      },
+      // 获取所有角色渲染弹窗下拉及筛选
       getRoleAll() {
         service.role.findAllRole({}).then(res => {
-          console.log(res);
+          if (res.code == 0) {
+            this.allRole = res.data;
+            let arr = res.data
+            arr.forEach(e=>{
+              e.isCho = false
+            })
+            let userManager = [
+              [
+                { type: "状态" },
+                { type: "全部", value: "", isCho: true },
+                { type: "有效", value: "01", isCho: false },
+                { type: "无效", value: "02", isCho: false }
+              ],
+              [
+                { type: "角色：" },
+                { type: "全部", value: "", isCho: true },
+                ...arr
+              ]
+            ];
+            this.userManager = userManager
+            // console.log(userManager)
+          }
         });
       },
       chooseType(item, subItem, index, subIndex) {
@@ -134,40 +211,20 @@
             e.isCho = false;
           });
           subItem.isCho = true;
-          this.serviceList[index] = item;
-          this.$set(this.serviceList, index, item);
+          this.userManager[index] = item;
+          this.$set(this.userManager, index, item);
         }
+        this.effectSymbol =  subItem.value ? subItem.value:"";
+        this.roleId = subItem.roleId ? subItem.roleId :"";
+        this.getUserListFn();
       },
-      handleFenPei() {},
-      getUserListFn() {
-        service.user.userList().then(res => {
-          // console.log(res);
-          if (res) {
-            this.userList = res.data.content;
-          }
-        });
+      handleFenPei(val) {
+        this.$refs.SelectRole.open();
+        this.choseName = val.username;
       },
       searchFn() {
-        if (this.searchVal != "") {
-          service.user
-            .findOneByUsername({
-              username: this.searchVal
-            })
-            .then(res => {
-              if (res.code == 404) {
-                this.$message({
-                  message: "不存在该用户"
-                });
-              } else {
-                this.userList = [res.data];
-              }
-            });
-        } else {
-          this.$message({
-            message: "不能为空",
-            type: "warning"
-          });
-        }
+        this.page.pageNumber = 1;
+        this.getUserListFn();
       },
       addUserFn() {
         // console.log(this.$ref)
@@ -177,7 +234,9 @@
       addUserDoneFn() {
         this.getUserListFn();
       },
-      selectRoleDoneFn() {},
+      selectRoleDoneFn() {
+        this.getUserListFn();
+      },
       handleDelete(val) {
         service.user
           .delUserByName({
@@ -185,9 +244,10 @@
           })
           .then(res => {
             if (res.code == 0) {
+              this.getUserListFn();
               this.$message({
                 type: "success",
-                message: ""
+                message: "删除成功"
               });
             }
           });
@@ -210,12 +270,14 @@
   .user-manage {
     height: 100%;
     .top {
-      padding: 20px 32px;
+        padding: 32px 20px;
       background: #fff;
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

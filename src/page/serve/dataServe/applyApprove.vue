@@ -1,5 +1,5 @@
 <template>
-  <div class="apply-approve">
+  <div class="apply-approve"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="服务器名称">
@@ -150,7 +150,9 @@ import { applyApprove } from "../../../constans/index";
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

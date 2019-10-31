@@ -6,7 +6,7 @@
       </el-breadcrumb>
     </div>
     <div class="two">
-      <el-button type="primary" @click="$router.push('/index')">+ 申请新服务</el-button>
+      <el-button type="primary" @click="$router.push('/serveList')">+ 申请新服务</el-button>
     </div>
     <div class="three">
       <el-table :data="tableData" style="width: 100%" class="three-tabble">

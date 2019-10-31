@@ -1,5 +1,5 @@
 <template>
-  <div class="user-manage">
+  <div class="user-manage"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="middle">
@@ -14,7 +14,7 @@
         </el-row>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="roleList" style="width: 100%">
         <el-table-column label="角色名称">
@@ -74,15 +74,14 @@
       this.getRoleListFn();
     },
     methods: {
-      handleCheck(data) {
-        service.role
-          .findOneByRoleId({
-            roleId: data.roleId
-          })
-          .then(res => {
-            console.log(res);
-          });
-        console.log(data.roleId);
+      handleCheck(val) {
+        this.$router.push({
+          path:"/serve/editRole",
+          query:{
+            disabled :1,
+            roleId:val.roleId, 
+          }
+        })
       },
       getRoleListFn() {
         service.role
@@ -92,7 +91,9 @@
             roleName: this.searchVal
           })
           .then(res => {
-            this.roleList = res.data;
+            if (res.code == 0) {
+              this.roleList = res.data;
+            }
           });
       },
       searchFn() {
@@ -100,15 +101,15 @@
         this.getRoleListFn();
       },
       addUserFn() {
-        this.$router.push("/serve/addRole");
+        this.$router.push("/serve/editRole");
       },
       handleEdit(val) {
         this.$router.push({
-          path:"/serve/addRole",
-          query:{
-            roleId :val.roleId
+          path: "/serve/editRole",
+          query: {
+            roleId: val.roleId
           }
-        })
+        });
       },
       handleDelete(val) {
         this.$confirm("确认删除该角色吗？", "提示", {
@@ -127,6 +128,7 @@
                     type: "success",
                     message: "删除角色成功"
                   });
+                  this.getRoleListFn()
                 }
               });
           })
@@ -147,11 +149,13 @@
   .user-manage {
     height: 100%;
     .top {
-      padding: 20px 32px;
+        padding: 32px 20px;
       background: #fff;
       border-radius: 4px;
     }
     .bottom {
+      flex: 1;
+      margin-top: 20px;
       height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;

@@ -12,8 +12,8 @@
             text-color="#333"
             router
           >
-            <el-menu-item index="/index">
-              <span>icon</span> 首页
+            <el-menu-item index="/serveList">
+               首页
             </el-menu-item>
             <el-menu-item index="/myServe">我的服务</el-menu-item>
             <el-menu-item index="/serve">服务管理</el-menu-item>

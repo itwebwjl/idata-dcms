@@ -1,5 +1,5 @@
 <template>
-  <div class="app-manage">
+  <div class="app-manage" style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
@@ -16,10 +16,7 @@
           </el-col>
         </el-row>
       </div>
-      <!-- <div class="list">
-      </div>-->
     </div>
-    <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
       <el-table :data="appList" style="width: 100%">
         <el-table-column label="子系统名称">
@@ -73,13 +70,13 @@
       </div>
     </div>
 
-    <AddApp ref="AddApp"></AddApp>
+    <AddApp ref="AddApp" @action="addFnDone"></AddApp>
   </div>
 </template>
 
 <script>
   import service from "../../../axios/index";
-  import AddApp from "../../../components/dialog/AddApp.vue";
+  import AddApp from "../../../components/app/AddApp.vue";
   export default {
     data() {
       return {
@@ -112,6 +109,10 @@
               this.appList = res.data.content;
             }
           });
+      },
+      addFnDone(){
+        this.page.pageNumber = 1;
+        this.getAppListfn();
       },
       searchFn() {
         this.page.pageNumber = 1;
@@ -154,12 +155,14 @@
   .app-manage {
     height: 100%;
     .top {
-      padding: 20px 32px;
+      padding: 32px 20px;
       background: #fff;
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

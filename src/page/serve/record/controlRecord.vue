@@ -1,5 +1,5 @@
 <template>
-  <div class="control-record">
+  <div class="control-record"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="monList" style="width: 100%">
         <el-table-column label="日志编号" width="150" type="index"></el-table-column>
@@ -200,7 +200,9 @@ import {controllRecord} from "../../../constans/index"
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

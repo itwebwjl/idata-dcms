@@ -1,59 +1,59 @@
 <template>
   <div class="serve-index">
-    <el-row type="flex">
-      <el-col :span="3">
-        <div class="slider">
-          <el-menu
-            class="sidebar-el-menu"
-            background-color="#fff"
-            text-color="#99999"
-            :default-active="$route.path"
-            @open="handleOpen"
-            @close="handleClose"
-            router
-          >
-            <template v-for="(item,index) in items">
-              <template v-if="item.subs">
-                <el-submenu :index="index+''" :key="index">
-                  <template slot="title">
-                    <i :class="item.icon"></i>
-                    <span slot="title">{{ item.title }}</span>
-                  </template>
+    <!-- <el-row type="flex">
+    <el-col :span="3">-->
+    <div class="slider">
+      <el-menu
+        class="sidebar-el-menu"
+        background-color="#fff"
+        text-color="#99999"
+        :default-active="$route.path"
+        @open="handleOpen"
+        @close="handleClose"
+        router
+      >
+        <template v-for="(item,index) in items">
+          <template v-if="item.subs">
+            <el-submenu :index="index+''" :key="index">
+              <template slot="title">
+                <i :class="item.icon"></i>
+                <span slot="title">{{ item.title }}</span>
+              </template>
 
-                  <el-menu-item
-                    v-for="(subItem,i) in item.subs"
-                    :index="subItem.index"
-                    :key="i"
-                  >{{ subItem.title }}</el-menu-item>
-                </el-submenu>
-              </template>
-              <template v-else>
-                <el-menu-item :index="item.index" :key="item.index">
-                  <i :class="item.icon"></i>
-                  <span slot="title">{{ item.title }}</span>
-                </el-menu-item>
-              </template>
-            </template>
-          </el-menu>
-        </div>
-      </el-col>
-      <el-col :span="21">
-        <div class="content">
-          <div class="el-breadcrumb-wrap">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item
-                v-for="(item,index) in routerInfo"
-                :key="index"
-                :to="{ path: item.src}"
-              >{{item.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
-          </div>
-          <div class="content-box">
-            <router-view></router-view>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
+              <el-menu-item
+                v-for="(subItem,i) in item.subs"
+                :index="subItem.index"
+                :key="i"
+              >{{ subItem.title }}</el-menu-item>
+            </el-submenu>
+          </template>
+          <template v-else>
+            <el-menu-item :index="item.index" :key="item.index">
+              <i :class="item.icon"></i>
+              <span slot="title">{{ item.title }}</span>
+            </el-menu-item>
+          </template>
+        </template>
+      </el-menu>
+    </div>
+    <!-- </el-col>
+    <el-col :span="21">-->
+    <div class="content">
+      <!-- <div class="el-breadcrumb-wrap">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item
+            v-for="(item,index) in routerInfo"
+            :key="index"
+            :to="{ path: item.src}"
+          >{{item.title}}</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div> -->
+      <div class="content-box">
+        <router-view></router-view>
+      </div>
+    </div>
+    <!-- </el-col>
+    </el-row>-->
   </div>
 </template>
 
@@ -74,6 +74,22 @@
               {
                 index: "/serve/createDataServe",
                 title: "创建数据服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建代理服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建聚合服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建推荐服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建H5服务"
               },
               {
                 index: "/serve/serveApprove",
@@ -120,7 +136,7 @@
     computed: {
       routerInfo() {
         const matched = this.$route.matched;
-        console.log(matched);
+        // console.log(matched);
         const newArr = matched.map(v => {
           // console.log(v.path);
           if (v.path == "" || v.path == "/") {
@@ -143,10 +159,10 @@
     created() {},
     methods: {
       handleOpen(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       }
     }
   };
@@ -155,17 +171,29 @@
 <style lang="scss" scoped>
   .serve-index {
     height: 100%;
-    overflow-y: scroll;
+    // overflow-y: scroll;
+    position: relative;
     .slider {
       width: 100%;
       height: 100%;
       background: #fff;
       border-radius: 8px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 300px;
     }
     .content {
-      margin-left: 30px;
-      background-color: #ffffff;
+      position: absolute;
+      left: 330px;
+      top: 0;
       height: 100%;
+      width: 83%;
+      margin-right: 30px;
+      overflow-y: scroll;
+    }
+    .content-box {
+      height: 100%; 
     }
   }
 </style>

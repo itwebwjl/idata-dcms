@@ -4,7 +4,7 @@
       <el-col :span="14">
         <el-form :model="formData" :rules="rules" ref="formData" label-width="100px">
           <el-form-item label="角色名称:" prop="roleName">
-            <el-input v-model="formData.roleName"></el-input>
+            <el-input v-model="formData.roleName" :disabled="isPreview()"></el-input>
           </el-form-item>
           <el-form-item label="角色描述:" prop="roleDsc" placeholder="请输入姓名">
             <el-input
@@ -13,13 +13,14 @@
               placeholder="请输入角色描述"
               v-model="formData.roleDsc"
               prop="roleDsc"
+              :disabled="isPreview()"
             ></el-input>
           </el-form-item>
           <el-form-item label="权限分配:" prop="name">
             <el-tree
               :data="powerList"
               show-checkbox
-              default-expand-all
+              :default-checked-keys="formData.powerIds"
               node-key="powerId"
               ref="tree"
               highlight-current
@@ -27,8 +28,8 @@
               :props="defaultProps"
             ></el-tree>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('formData')">立即创建</el-button>
+          <el-form-item v-if="!isPreview()">
+            <el-button type="primary" @click="submitForm('formData')">保存</el-button>
             <el-button @click="resetForm('formData')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -41,6 +42,7 @@
   import service from "../../../axios/index";
   export default {
     data() {
+      const that = this 
       return {
         roleId: "",
         powerList: [],
@@ -60,12 +62,17 @@
 
         defaultProps: {
           children: "powerList",
-          label: "powerName"
-        }
+          label: "powerName",
+          disabled: function(data, node) {
+            return that.isPreview()
+          }
+        },
+        // disabled: "false"
       };
     },
     created() {
       this.roleId = this.$route.query.roleId || "";
+      // this.disabled = this.$route.query.disabled;
       if (this.roleId) {
         this.findOneByRoleIdFn();
       } else {
@@ -75,9 +82,10 @@
     },
     methods: {
       handleCheckChange(data, checked, indeterminate) {
-        // console.log(data, checked, indeterminate);
-        // console.log(this.$refs.tree.getCheckedKeys());
         this.formData.powerIds = this.$refs.tree.getCheckedKeys();
+      },
+      isPreview(){
+        return this.$route.query.disabled ? true : false
       },
       submitForm(formName) {
         this.$refs[formName].validate(valid => {
@@ -130,11 +138,13 @@
             this.powerList = res.data.powerList;
             this.formData = res.data.role;
           })
-          .then(() => {
-            this.$nextTick(() => {
-              this.$refs.tree.setCheckedKeys(this.formData.powerIds);
-            });
-          });
+          // .then(() => {
+          //   this.$nextTick(() => {
+          //     if (this.formData) {
+          //       this.$refs.tree.setCheckedKeys(this.formData.powerIds);
+          //     }
+          //   });
+          // });
       },
       findAllPowerFn() {
         service.role.findAllPower({}).then(res => {
