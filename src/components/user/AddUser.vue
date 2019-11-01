@@ -1,5 +1,6 @@
 <template>
-    <el-dialog title="分配角色" :visible.sync="selectRole">
+  <div>
+    <el-dialog title="新增用户" :visible.sync="centerDialogVisible">
       <el-row type="flex" justify="center">
         <el-col :span="16">
           <el-form
@@ -9,20 +10,18 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="分配角色:" prop="role">
-              <el-select v-model="ruleForm.role" placeholder="请分配角色">
-                <el-option label="管理员" value="shanghai"></el-option>
-                <el-option label="超级管理员" value="beijing"></el-option>
-              </el-select>
+            <el-form-item label="UM号:" prop="name">
+              <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="reset('ruleForm')">取消</el-button>
+              <el-button type="primary" @click="resetForm('ruleForm')">取消</el-button>
               <el-button @click="submitForm('ruleForm')">确定</el-button>
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
     </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -30,20 +29,21 @@
   export default {
     data() {
       return {
-        selectRole: true,
+        centerDialogVisible: false,
         ruleForm: {
-          role: ""
+          name: ""
         },
         rules: {
-          role: [
+          name: [
             { required: true, message: "请输入活动名称", trigger: "blur" },
+            { min: 0, max: 10, message: "长度在 0 到 10 个字符", trigger: "blur" }
           ]
         }
       };
     },
     methods: {
       open() {
-        this.selectRole = true;
+        this.centerDialogVisible = true;
       },
       submitForm(formName) {
         this.$refs[formName].validate(valid => {
@@ -55,7 +55,12 @@
               })
               .then(res => {
                 if (res.code == 0) {
-                  this.reset(formName)
+                  this.centerDialogVisible = false;
+                  this.$message({
+                    type: "success",
+                    message: "新增用成功"
+                  });
+                  this.resetForm(formName);
                   this.$emit("action");
                 }
                 // 异常处理直接提示
@@ -66,8 +71,9 @@
           }
         });
       },
-      reset(formName) {
-        this.selectRole = false;
+      resetForm(formName) {
+        this.centerDialogVisible = false;
+        this.$refs[formName].resetFields();
       }
     }
   };

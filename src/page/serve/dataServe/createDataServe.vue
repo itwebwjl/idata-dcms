@@ -1,5 +1,5 @@
 <template>
-  <div class="create-dataServe">
+  <div class="create-dataServe"  style="display:flex;flex-direction:column">
     <div class="one-steps">
       <el-steps :active="active" align-center>
         <el-step title="基础信息"></el-step>
@@ -9,7 +9,7 @@
         <el-step title="安全配置"></el-step>
       </el-steps>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="from-wrap">
       <div v-if="(active==1)">
         <!-- 基础信息 -->
@@ -560,14 +560,14 @@ import AddParams from "../../../components/dialog/AddParams.vue";
     .one-steps {
       background: #fff;
       border-radius: 4px;
-      padding: 20px 0;
+      padding: 50px 0 30px 0;
     }
     .from-wrap {
-      margin-top: 16px;
+      flex: 1;
+      margin-top: 20px;
       border-radius: 4px;
       background: #fff;
       padding: 40px 32px;
-      height: 100%;
       .enter-param {
         height: 55px;
         line-height: 55px;

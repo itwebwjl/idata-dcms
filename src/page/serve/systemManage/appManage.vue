@@ -1,50 +1,56 @@
 <template>
-  <div class="app-manage">
+  <div class="app-manage" style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
-          <el-col :span="22">
-              <el-input placeholder="请输入关键词搜索">
-                   <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+          <el-col :span="18">
+            <el-input placeholder="请输入关键词搜索" v-model="searchVal" @keyup.enter.native="searchFn">
+              <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
             </el-input>
           </el-col>
-          <el-col :span="2" align="right">
+          <el-col :span="3" align="right">
             <el-button type="primary" @click="addAppFn">新增应用</el-button>
+          </el-col>
+          <el-col :span="3" align="right">
+            <el-button type="default" @click="addAppFn">批量导入</el-button>
           </el-col>
         </el-row>
       </div>
-      <div class="list">
-        <div class="item">
-          <span class="label-type">专业公司：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">平安银行</a>
-          <a href="javascript:;" class="item-type">平安租赁</a>
-          <a href="javascript:;" class="item-type">平安产检</a>
-          <a href="javascript:;" class="item-type">平安养老险</a>
-        </div>
-      </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
     <div class="bottom">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="应用ID">
+      <el-table :data="appList" style="width: 100%">
+        <el-table-column label="子系统名称">
           <template slot-scope="scope">
-            <span>{{ scope.row.date }}</span>
+            <span>{{ scope.row.applicationName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="应用名称">
+        <el-table-column label="所属系统">
           <template slot-scope="scope">
-            <span>{{ scope.row.date }}</span>
+            <span>{{ scope.row.parentName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="所属专业公司">
+        <el-table-column label="归属业务条线">
           <template slot-scope="scope">
-            <span>{{ scope.row.date }}</span>
+            <span>{{ scope.row.homebusinesslineName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="主营业务部门">
+          <template slot-scope="scope">
+            <span>{{ scope.row.businessleaderName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="业务负责人">
+          <template slot-scope="scope">
+            <span>{{ scope.row.homebusinesslineName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="开发负责人">
+          <template slot-scope="scope">
+            <span>{{ scope.row.developerName }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDelete(scope.row)">修改</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -55,67 +61,91 @@
           background
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          layout="total, next,pager,prev"
+          :current-page="page.pageNumber"
+          layout="total,sizes,next,pager,prev,jumper"
           prev-text="上一页"
           next-text="下一页"
-          :total="400"
+          :total="totalElements"
         ></el-pagination>
       </div>
     </div>
 
-    <AddApp ref="AddApp"></AddApp>
+    <AddApp ref="AddApp" @action="addFnDone"></AddApp>
   </div>
 </template>
 
 <script>
-import AddApp from "../../../components/dialog/AddApp.vue";
+  import service from "../../../axios/index";
+  import AddApp from "../../../components/app/AddApp.vue";
   export default {
     data() {
       return {
-        currentPage: 2,
-        tableData: [
-          {
-            date: "2016-05-02",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1518 弄"
-          },
-          {
-            date: "2016-05-04",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1517 弄"
-          },
-          {
-            date: "2016-05-01",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1519 弄"
-          },
-          {
-            date: "2016-05-03",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1516 弄"
-          }
-        ]
+        searchVal: "",
+        currentPage: 1,
+        appList: [],
+        totalElements: 0,
+        page: {
+          pageNumber: 1,
+          pageSize: 10
+        }
       };
     },
-    components:{
-      AddApp,
+    created() {
+      this.getAppListfn();
     },
-    methods:{
-      searchFn(){
-        console.log('123')
+    components: {
+      AddApp
+    },
+    methods: {
+      getAppListfn() {
+        service.app
+          .getAppList({
+            pageNumber: this.page.pageNumber,
+            pageSize: this.page.pag1eSize,
+            applicationName: this.searchVal
+          })
+          .then(res => {
+            if (res) {
+              this.appList = res.data.content;
+            }
+          });
       },
-      addAppFn(){
+      addFnDone(){
+        this.page.pageNumber = 1;
+        this.getAppListfn();
+      },
+      searchFn() {
+        this.page.pageNumber = 1;
+        this.getAppListfn();
+      },
+      addAppFn() {
         // console.log(this.$ref)
-        this.$refs.AddApp.open()
+        this.$refs.AddApp.open();
       },
-      handleSizeChange(){
+      handleDelete(val) {
+        // console.log(val.applicationId)
+        service.app.deleteApp({
+          applicationId:val.applicationId
+        }).then(res=>{
+          if(res.code == 0) {
+            this.getAppListfn();
+            this.$message({
+              type:"success",
+              message:"删除应用成功"
+            })
+          }
+        })
 
       },
-      handleCurrentChange(){
-
+      handleSizeChange(val) {
+        this.page.pageNumber = 1;
+        this.page.pageSize = val;
+        this.getAppListfn();
+        // console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        this.page.pageNumber = val;
+        this.getAppListfn();
       }
     }
   };
@@ -125,12 +155,14 @@ import AddApp from "../../../components/dialog/AddApp.vue";
   .app-manage {
     height: 100%;
     .top {
-      padding: 20px 32px;
+      padding: 32px 20px;
       background: #fff;
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

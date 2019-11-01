@@ -1,5 +1,5 @@
 <template>
-  <div class="handle-record">
+  <div class="handle-record"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
@@ -21,10 +21,14 @@
         </el-row>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="logList" style="width: 100%">
-        <el-table-column label="日志编号" width="150" type="index"></el-table-column>
+        <el-table-column label="日志编号">
+          <template slot-scope="scope">
+            <span>{{ scope.row.id }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="用户名称">
           <template slot-scope="scope">
             <span>{{ scope.row.username }}</span>
@@ -99,7 +103,7 @@
           service.log
             .getLogsList({
               pageNumber: this.page.pageNumber,
-              pageSize: this.page.pag1eSize,
+              pageSize: this.page.pageSize,
               content: this.searchVal
             })
             .then(res => {
@@ -167,12 +171,14 @@
   .handle-record {
     height: 100%;
     .top {
-      padding: 20px 32px;
+         padding: 32px 20px;
       background: #fff;
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

@@ -9,12 +9,15 @@ export default new Router({
     {
       path: '/',
       component: resolve => require(['../frame/navbar.vue'], resolve),
-      redirect: "/index",
-      meta: { title: "首页" },
+      redirect: "/serveList",
+      meta: { title: "navbar" },
       children: [
         {
-          path: "/index",
-          component: resolve => require(['../page/index/index.vue'], resolve),
+          path: "/serveList",
+          component: resolve => require(['../page/index/serveList.vue'], resolve),
+          meta: {
+            title: "服务列表"
+          }
         },
         {
           path: "/myServe",

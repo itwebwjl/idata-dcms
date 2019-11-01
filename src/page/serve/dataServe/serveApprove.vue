@@ -1,47 +1,28 @@
 <template>
-  <div class="serve-approve">
+  <div class="serve-approve"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
           <el-col :span="24">
             <el-input placeholder="请输入关键词搜索">
-                <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
+              <span slot="suffix" class="el-icon-search custom" @click="searchFn"></span>
             </el-input>
           </el-col>
         </el-row>
       </div>
       <div class="list">
-        <div class="item">
-          <span class="label-type">服务类型：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">接口服务</a>
-          <a href="javascript:;" class="item-type">推荐服务</a>
-          <a href="javascript:;" class="item-type">H5 服务</a>
-          <a href="javascript:;" class="item-type">聚合服务</a>
-        </div>
-        <div class="item">
-          <span class="label-type">服务状态：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">正常</a>
-          <a href="javascript:;" class="item-type">暂停</a>
-        </div>
-        <div class="item">
-          <span class="label-type">操作类型：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">创建</a>
-          <a href="javascript:;" class="item-type">修改</a>
-          <a href="javascript:;" class="item-type">删除</a>
-        </div>
-        <div class="item">
-          <span class="label-type">审批状态：</span>
-          <a href="javascript:;" class="item-type active">全部</a>
-          <a href="javascript:;" class="item-type">待审批</a>
-          <a href="javascript:;" class="item-type">审批通过</a>
-          <a href="javascript:;" class="item-type">审批拒绝</a>
+        <div class="item" v-for="(item,index) in serveApprove" :key="index">
+          <a
+            @click="chooseType(item,subItem,index,subIndex)"
+            href="javasript:;"
+            :class="{'item-type':subIndex!=0,'label-type':subIndex == 0,'active':subItem.isCho}"
+            v-for="(subItem,subIndex) in item "
+            :key="subIndex"
+          >{{subItem.type}}</a>
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="服务器名称">
@@ -97,14 +78,14 @@
         ></el-pagination>
       </div>
     </div>
-
   </div>
 </template>
-
 <script>
+  import { serveApprove } from "../../../constans/index";
   export default {
     data() {
       return {
+        serveApprove,
         currentPage: 2,
         tableData: [
           {
@@ -130,23 +111,25 @@
         ]
       };
     },
-    components:{
-    },
-    methods:{
-      searchFn(){
-        console.log('123')
+    components: {},
+    methods: {
+      chooseType(item, subItem, index, subIndex) {
+        if (subIndex) {
+          item.forEach(e => {
+            e.isCho = false;
+          });
+          subItem.isCho = true;
+          this.serviceList[index] = item;
+          this.$set(this.serviceList, index, item);
+        }
       },
-      addUserFn(){
+      searchFn() {
+        console.log("123");
       },
-      handleCheck(){
-
-      },
-      handleSizeChange(){
-
-      },
-      handleCurrentChange(){
-
-      }
+      addUserFn() {},
+      handleCheck() {},
+      handleSizeChange() {},
+      handleCurrentChange() {}
     }
   };
 </script>
@@ -160,7 +143,8 @@
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

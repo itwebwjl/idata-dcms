@@ -1,9 +1,8 @@
 <template>
   <div class="apply-use">
-      <el-dialog
+    <el-dialog
       title="选择应用"
-      :visible.sync="show"
-      :before-close="close"
+      :visible.sync="centerDialogVisible"
       custom-class="apply-use-popup"
       width="40%"
     >
@@ -13,13 +12,19 @@
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100px"
+            label-width="120px"
             class="demo-ruleForm"
           >
-            <el-form-item label="请选择应用:" prop="region">
-              <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                <el-option label="000001-赢家" value="shanghai"></el-option>
-                <el-option label="审批不通过" value="beijing"></el-option>
+            <el-form-item label="请选择主系统:" width="200" prop="sysFarther">
+              <el-select v-model="ruleForm.region" placeholder="请选择主系统">
+                <el-option label="主系统A" value="shanghai"></el-option>
+                <el-option label="主系统B" value="beijing"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="请选择子系统:" prop="sysSon">
+              <el-select v-model="ruleForm.region" placeholder="请选择子系统">
+                <el-option label="赢家" value="shanghai"></el-option>
+                <el-option label="团进E" value="beijing"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="审批意见:" prop="region">
@@ -31,7 +36,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button @click="resetForm('ruleForm')">取消</el-button>
+              <el-button @click="reset('ruleForm')">取消</el-button>
               <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
             </el-form-item>
           </el-form>
@@ -45,68 +50,43 @@
   export default {
     data() {
       return {
-         show: false,
+        centerDialogVisible: false,
         textarea: "",
         ruleForm: {
           name: "",
-          region: "shanghai",
-          date1: "",
-          date2: "",
-          delivery: false,
-          type: [],
-          resource: "",
-          radio: "1"
+          sysFarther: "",
+          sysSon:"",
+
         },
         rules: {
-          name: [
-            { required: true, message: "请输入活动名称", trigger: "blur" },
-            { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+          sysFarther: [
+            { required: true, message: "请选择主系统", trigger: "blur" }
           ],
-          region: [
-            { required: true, message: "请选择活动区域", trigger: "change" }
-          ],
-          date1: [
-            {
-              type: "date",
-              required: true,
-              message: "请选择日期",
-              trigger: "change"
-            }
-          ],
-          date2: [
-            {
-              type: "date",
-              required: true,
-              message: "请选择时间",
-              trigger: "change"
-            }
-          ],
-          type: [
-            {
-              type: "array",
-              required: true,
-              message: "请至少选择一个活动性质",
-              trigger: "change"
-            }
-          ],
-          resource: [
-            { required: true, message: "请选择活动资源", trigger: "change" }
-          ]
+          sysSon:[ { required: true, message: "请选择子系统", trigger: "blur" }]
         }
       };
     },
     methods: {
-      open(){
-        this.show = true;
+      open() {
+        this.centerDialogVisible = true;
       },
-      close() {
-        this.show = false;
+       submitForm(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            // alert('submit!');
+          } else {
+            console.log("error submit!!");
+            return false;
+          }
+        });
       },
-      confirm() {}
+      reset(formName) {
+        this.centerDialogVisible = false;
+        this.$refs[formName].resetFields();
+      },
     }
   };
 </script>
 
 <style lang="scss" scoped>
- 
 </style>

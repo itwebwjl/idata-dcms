@@ -2,26 +2,22 @@
   <div class="home">
     <div class="header clearfix">
       <el-row type="flex" align="middle">
-        <el-col :span="3">
-          <div class="one">平安银行数据服务中台</div>
-        </el-col>
+        <el-col :span="3">平安银行数据服务中台</el-col>
         <el-col :span="9">
-          <div class="two">
-            <el-menu
-              :default-active="activeIndex"
-              class="el-menu-demo"
-              mode="horizontal"
-              @select="handleSelect"
-              active-text-color="#ff7635"
-              text-color="#333"
-            >
-              <el-menu-item index="0">
-                <span>icon</span> 首页
-              </el-menu-item>
-              <el-menu-item index="1">我的服务</el-menu-item>
-              <el-menu-item index="2">服务管理</el-menu-item>
-            </el-menu>
-          </div>
+          <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            active-text-color="#ff7635"
+            text-color="#333"
+            router
+          >
+            <el-menu-item index="/serveList">
+               首页
+            </el-menu-item>
+            <el-menu-item index="/myServe">我的服务</el-menu-item>
+            <el-menu-item index="/serve">服务管理</el-menu-item>
+          </el-menu>
         </el-col>
         <el-col :span="6">
           <div class="three">
@@ -47,36 +43,35 @@
 </template>
 
 <script>
-import service from "../axios/index";
+  import service from "../axios/index";
   export default {
     data() {
       return {
-        activeIndex: sessionStorage.getItem("activeIndex") || '0'
+        activeIndex: this.$route.matched[1].path,
       };
     },
-    methods: {
-      loginOut(){
-        let that = this
-        service.user.userLogout({}).then(res=>{
-          this.$message({
-            message:"退出成功",
-            type:"success"
-          },()=>{
-            that.$router.push('/login')
-          })
-        })
-      },
-      handleSelect(key, keyPath) {
-        if (key == 0) {
-          sessionStorage.setItem("activeIndex", '0')
-          this.$router.push("/index");
-        } else if (key == 1) {
-          sessionStorage.setItem("activeIndex", '1')
-          this.$router.push("/myServe");
-        } else if (key == 2) {
-          sessionStorage.setItem("activeIndex", '2')
-          this.$router.push("/serve");
+    watch: {
+      "$route": function(val) {
+        // console.log(val.matched[1].path)
+        if (val) {
+          this.activeIndex  = val.matched[1].path;
         }
+      }
+    },
+    methods: {
+      loginOut() {
+        let that = this;
+        service.user.userLogout({}).then(res => {
+          this.$message(
+            {
+              message: "退出成功",
+              type: "success"
+            },
+            () => {
+              that.$router.push("/login");
+            }
+          );
+        });
       },
       searchFn() {
         console.log(123);
@@ -95,31 +90,10 @@ import service from "../axios/index";
       width: 100%;
       height: 80px;
       background-color: #fff;
-      z-index: 999;
+      z-index: 99;
       box-shadow: 0px 2px 10px 0px rgba(157, 157, 157, 0.2);
-
-      .one {
-        line-height: 80px;
-      }
-
-      .two {
-        padding-left: 150px;
-        height: 80px;
-
-        ul {
-          li {
-            height: 80px;
-          }
-        }
-      }
-
-      .three {
-        // line-height: 80px;
-      }
-
       .four {
         padding-right: 24px;
-        line-height: 80px;
 
         .logo {
           display: inline-block;
@@ -143,11 +117,12 @@ import service from "../axios/index";
 
     .content {
       background: #ececec;
-      padding: 96px 16px 16px 16px;
+      padding: 20px 16px 16px 16px;
       border-radius: 4px;
-      // height: 99.5%;
+      padding-top: 100px;
       height: 100%;
-      overflow-y: scroll;
+      overflow: hidden;
+      // overflow-y: scroll;
     }
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="control-record">
+  <div class="control-record"  style="display:flex;flex-direction:column">
     <div class="top">
       <div class="one">
         <el-row type="flex" align="bottom">
@@ -15,7 +15,7 @@
       </div>
       <div class="two">
         <div class="list">
-          <div class="item" v-for="(item,index) in typeList" :key="index">
+          <div class="item" v-for="(item,index) in controllRecord" :key="index">
             <a
               @click="chooseType(item,subItem,index,subIndex)"
               href="javasript:;"
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div style="height:16px;background:#ececec"></div>
+    <!-- <div style="height:16px;background:#ececec"></div> -->
     <div class="bottom">
       <el-table :data="monList" style="width: 100%">
         <el-table-column label="日志编号" width="150" type="index"></el-table-column>
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import {controllRecord} from "../../../constans/index"
   import service from "../../../axios/index";
   export default {
     data() {
@@ -106,28 +107,29 @@
         choseData: "",
         monList: [],
         totalElements: 0,
-        typeList: [
-          [
-            { type: "服务类型：" },
-            { type: "全部", value: 1, isCho: true },
-            { type: "接口服务", value: 2, isCho: false },
-            { type: "推荐服务", value: 3, isCho: false },
-            { type: "H5服务" },
-            { type: "聚合服务" }
-          ],
-          [
-            { type: "调用类型：" },
-            { type: "全部", value: 1, isCho: true },
-            { type: "成功", value: 2, isCho: false },
-            { type: "失败", value: 3, isCho: false }
-          ],
-          [
-            { type: "费用：" },
-            { type: "全部", value: 1, isCho: true },
-            { type: "免费", value: 2, isCho: false },
-            { type: "收费", value: 3, isCho: false }
-          ]
-        ],
+        // typeList: [
+        //   [
+        //     { type: "服务类型：" },
+        //     { type: "全部", value: 1, isCho: true },
+        //     { type: "接口服务", value: 2, isCho: false },
+        //     { type: "推荐服务", value: 3, isCho: false },
+        //     { type: "H5服务" },
+        //     { type: "聚合服务" }
+        //   ],
+        //   [
+        //     { type: "调用类型：" },
+        //     { type: "全部", value: 1, isCho: true },
+        //     { type: "成功", value: 2, isCho: false },
+        //     { type: "失败", value: 3, isCho: false }
+        //   ],
+        //   [
+        //     { type: "费用：" },
+        //     { type: "全部", value: 1, isCho: true },
+        //     { type: "免费", value: 2, isCho: false },
+        //     { type: "收费", value: 3, isCho: false }
+        //   ]
+        // ],
+        controllRecord,
         page: {
           pageNumber: 1,
           pageSize: 10
@@ -158,8 +160,8 @@
             e.isCho = false;
           });
           subItem.isCho = true;
-          this.typeList[index] = item;
-          this.$set(this.monList, index, item);
+          this.controllRecord[index] = item;
+          this.$set(this.controllRecord, index, item);
         }
       },
       choseDataFn() {
@@ -198,7 +200,9 @@
       border-radius: 4px;
     }
     .bottom {
-      height: 100%;
+      flex: 1;
+      margin-top: 20px;
+      // height: 100%;
       border-radius: 4px;
       padding: 20px 20px 0 20px;
       background: #fff;

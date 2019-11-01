@@ -11,14 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/': {//设置本地跨域请求
-      //     target:'http://172.20.10.2',
-      //     secure: false, // 接受 运行在 https 上的服务
-      //     changeOrigin: true,
-      //     pathRewrite: {
-      //         '/': '/'
-      //     }
-      // }
+      '/': {//设置本地跨域请求
+          target:'http://118.190.199.77:30001',
+          secure: false, // 接受 运行在 https 上的服务
+          changeOrigin: true,
+          pathRewrite: {
+              '/': ''
+          }
+      }
   },
 
     // Various Dev Server settings

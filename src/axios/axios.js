@@ -3,6 +3,7 @@ import { Message } from 'element-ui';
 import NProgress from "nprogress";
 import 'nprogress/nprogress.css' // Progress 进度条样式
 import qs from "qs";
+import Vue from "vue";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.API_ROOT;
 // axios.defaults.timeout = 6000;
@@ -22,12 +23,27 @@ axios.interceptors.response.use(
     NProgress.done()
     if (response.data.code == 0) {
       return response.data
-    } else {
+    }else if (response.data.code == 50006) {
+      // Vue.prototype.$alert("请重新登录");
       Message({
-        message: response.data.msg ||'接口异常',
+        message: '请重新登录',
         type: "error"
       })
-      return response.data;
+      return ;
+    }else if (response.data.code == 400) {
+      // Vue.prototype.$alert("请重新登录");
+      Message({
+        message: '服务器出现故障啦',
+        type: "error"
+      })
+      return ;
+    }
+    else {
+      Message({
+        message: response.data.message ||'接口异常',
+        type: "error"
+      })
+      return;
     }
   },
   err => {

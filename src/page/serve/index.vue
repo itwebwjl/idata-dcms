@@ -1,5 +1,7 @@
 <template>
-  <div class="serve-index clearfix">
+  <div class="serve-index">
+    <!-- <el-row type="flex">
+    <el-col :span="3">-->
     <div class="slider">
       <el-menu
         class="sidebar-el-menu"
@@ -34,8 +36,10 @@
         </template>
       </el-menu>
     </div>
+    <!-- </el-col>
+    <el-col :span="21">-->
     <div class="content">
-      <div class="el-breadcrumb-wrap">
+      <!-- <div class="el-breadcrumb-wrap">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item
             v-for="(item,index) in routerInfo"
@@ -43,11 +47,13 @@
             :to="{ path: item.src}"
           >{{item.title}}</el-breadcrumb-item>
         </el-breadcrumb>
-      </div>
+      </div> -->
       <div class="content-box">
         <router-view></router-view>
       </div>
     </div>
+    <!-- </el-col>
+    </el-row>-->
   </div>
 </template>
 
@@ -68,6 +74,22 @@
               {
                 index: "/serve/createDataServe",
                 title: "创建数据服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建代理服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建聚合服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建推荐服务"
+              },
+              {
+                index: "/serve/createDataServe",
+                title: "创建H5服务"
               },
               {
                 index: "/serve/serveApprove",
@@ -119,9 +141,9 @@
           // console.log(v.path);
           if (v.path == "" || v.path == "/") {
             return {
-              src:'no',
-              title:'首页'
-            }
+              src: "no",
+              title: "首页"
+            };
           } else {
             return {
               src: v.path,
@@ -129,18 +151,18 @@
             };
           }
         });
-        newArr.shift()
-        // console.log(newArr)  
+        newArr.shift();
+        // console.log(newArr)
         return newArr;
       }
     },
     created() {},
     methods: {
       handleOpen(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       }
     }
   };
@@ -149,27 +171,29 @@
 <style lang="scss" scoped>
   .serve-index {
     height: 100%;
+    // overflow-y: scroll;
     position: relative;
     .slider {
-      position: absolute;
-      margin: 0 16px;
-      width: 201px;
+      width: 100%;
       height: 100%;
       background: #fff;
-      border-radius: 4px;
+      border-radius: 8px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 300px;
     }
     .content {
-      // float: left;
-      // width: 87%;
-      // height: 100%;
-      // overflow: hidden;
       position: absolute;
-      left: 236px;
-      right: 0;
+      left: 330px;
       top: 0;
-      bottom: 0;
-      // overflow-y: scroll;
-      background-color: #ffffff;
+      height: 100%;
+      width: 83%;
+      margin-right: 30px;
+      overflow-y: scroll;
+    }
+    .content-box {
+      height: 100%; 
     }
   }
 </style>
