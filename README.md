@@ -20,8 +20,3 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-1  监控日志 Ok
-2  操作日志 OK
-3  应用管理  新增应用code: 400 
-4 用户管理 ok 
-5 角色管理 ok 
